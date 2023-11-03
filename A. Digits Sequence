@@ -2,34 +2,32 @@
 #define ll long long
 #define ull unsigned long long
 #define pb push_back
-#define fastread() (ios_base:: sync_with_stdio(false),cin.tie(NULL));
+#define fastread() (ios_base::sync_with_stdio(false), cin.tie(NULL))
 using namespace std;
 
-int main(){
-fastread();
-ll n;
-cin>>n;
-vector<int> v;
-stack<int> st;
-for(ll i=1;i<=5000;i++){
-if(i<10){
-v.pb(i);
-}
-else{
-int a=i,d;
-while(a>=10){
-d=a%10;
-a=a/10;
-st.push(d);
-}
-st.push(a);
-while(!st.empty()){
-d=st.top();
-st.pop();
-v.pb(d);
-}
-}
-}
-cout<<v[n-1]<<endl;
-return 0;
+int main() {
+    fastread();
+    ll n;
+    cin >> n;
+
+    if (n <= 9) {
+        cout << n << endl;
+    } else {
+        n -= 10; // We've already handled the single-digit numbers
+        ll digitsPerNumber = 2; // Numbers from 10 to 99 have 2 digits each
+
+        while (n > digitsPerNumber * 9 * pow(10, digitsPerNumber - 1)) {
+            n -= digitsPerNumber * 9 * pow(10, digitsPerNumber - 1);
+            digitsPerNumber++;
+        }
+
+        ll number = n / digitsPerNumber + pow(10, digitsPerNumber - 1);
+        int digitIndex = n % digitsPerNumber;
+
+        string numberStr = to_string(number);
+        char result = numberStr[digitIndex];
+        cout << result << endl;
+    }
+
+    return 0;
 }
